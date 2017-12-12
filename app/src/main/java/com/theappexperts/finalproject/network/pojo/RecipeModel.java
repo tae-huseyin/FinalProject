@@ -7,14 +7,14 @@ public class RecipeModel {
 
     @SerializedName("recipe")
     @Expose
-    private Recipe recipe;
+    private Recipes recipes;
 
-    public Recipe getRecipe() {
-        return recipe;
+    public Recipes getRecipes() {
+        return recipes;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    public void setRecipe(Recipes recipes) {
+        this.recipes = recipes;
     }
 
 }
