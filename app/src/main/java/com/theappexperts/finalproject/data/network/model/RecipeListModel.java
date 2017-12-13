@@ -1,4 +1,4 @@
-package com.theappexperts.finalproject.network.pojo;
+package com.theappexperts.finalproject.data.network.model;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

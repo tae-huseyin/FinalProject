@@ -1,6 +1,6 @@
-package com.theappexperts.finalproject.network;
+package com.theappexperts.finalproject.data.network.services;
 
-import com.theappexperts.finalproject.network.pojo.RecipeListModel;
+import com.theappexperts.finalproject.data.network.model.RecipeListModel;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

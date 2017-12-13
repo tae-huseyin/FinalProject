@@ -1,4 +1,4 @@
-package com.theappexperts.finalproject.network.consts;
+package com.theappexperts.finalproject.data.network.consts;
 
 /**
  * Created by TheAppExperts on 12/12/2017.
