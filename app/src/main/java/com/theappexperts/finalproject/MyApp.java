@@ -3,6 +3,7 @@ package com.theappexperts.finalproject;
 import android.app.Application;
 
 import com.theappexperts.finalproject.injection.components.ApplicationComponent;
+import com.theappexperts.finalproject.injection.components.DaggerApplicationComponent;
 import com.theappexperts.finalproject.injection.modules.ApplicationModule;
 
 /**
