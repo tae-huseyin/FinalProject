@@ -5,12 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.theappexperts.finalproject.data.network.model.RecipeListModel;
+import com.theappexperts.finalproject.data.network.model.Recipe;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -20,27 +23,23 @@ import butterknife.Unbinder;
 
 public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModelAdapter.MyViewHolder> {
 
-    private List<RecipeListModel> recipesList;
-    private int row_list;
+    private List<Recipe> recipesList;
     private Context context;
-    Unbinder unbinder;
 
-    public RecipeListModelAdapter(List<RecipeListModel> recipesList, int row_list, Context context) {
+    public RecipeListModelAdapter(List<Recipe> recipesList, Context context) {
         this.recipesList = recipesList;
-        this.row_list = row_list;
         this.context = context;
     }
 
     @Override
     public RecipeListModelAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.progress_dialog, parent, false);
-        unbinder = ButterKnife.bind(this, view);
+        View view = LayoutInflater.from(context).inflate(R.layout.recipes_list, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecipeListModelAdapter.MyViewHolder holder, int position) {
-        //holder..setText(recipesList.get(position).getTitle())
+        holder.tvTitle.setText(recipesList.get(position).getTitle());
     }
 
     @Override
@@ -50,11 +49,17 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        //@BindView()
-        //TextView tvTitle;
+        Unbinder unbinder;
+
+        @BindView(R.id.tvTitle)
+        TextView tvTitle;
+
+        //@BindView(R.id.ivFood)
+        //ImageView ivFood;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            unbinder = ButterKnife.bind(this, itemView);
         }
     }
 }

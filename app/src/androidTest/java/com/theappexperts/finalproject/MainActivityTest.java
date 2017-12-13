@@ -24,8 +24,7 @@ public class MainActivityTest {
     public ActivityTestRule<MainActivity> activityActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
 
     @Test
-    public void checkActivityHasText(){
-        onView(withId(R.id.blah)).check(matches(isDisplayed()));
-        onView(withText(R.string.api_retry_error)).check(matches(isDisplayed()));
+    public void checkActivityHasRecyclerView(){
+        onView(withId(R.id.rvRecipeList)).check(matches(isDisplayed()));
     }
 }
