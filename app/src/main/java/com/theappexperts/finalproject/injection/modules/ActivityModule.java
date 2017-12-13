@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import com.theappexperts.finalproject.injection.scope.ActivityContext;
+import com.theappexperts.finalproject.views.recipelist.IRecipeListMvpPresenter;
+import com.theappexperts.finalproject.views.recipelist.IRecipeListMvpView;
+import com.theappexperts.finalproject.views.recipelist.RecipeListPresenter;
 import com.theappexperts.finalproject.views.ui.utils.rx.AppSchedulerProvider;
 import com.theappexperts.finalproject.views.ui.utils.rx.SchedulerProvider;
 
@@ -49,5 +52,9 @@ public class ActivityModule {
         return new CompositeDisposable();
     }
 
-    //TODO do listmvppresenter
+    @Provides
+    IRecipeListMvpPresenter<IRecipeListMvpView> getRecipeListPresenter(RecipeListPresenter<IRecipeListMvpView> recipeListMvpViewRecipeListPresenter)
+    {
+        return recipeListMvpViewRecipeListPresenter;
+    }
 }

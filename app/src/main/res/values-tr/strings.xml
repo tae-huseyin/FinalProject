@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FinalProje</string>
+
+    <string name="api_retry_error">Lütfen tekrar deneyiniz!</string>
+    <string name="api_default_error">Ters şeyler oldu!</string>
+    <string name="some_error">Bazı Hata Oluştu!</string>
+    <string name="connection_error">İnternet bağlantısı kesildi!</string>
+
+</resources>
