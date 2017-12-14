@@ -26,8 +26,8 @@ public class AppDataManager implements IDataManager {
     }
 
     @Override
-    public Observable<RecipeListModel> getFromApi_RecipeList() {
-        return apiHelper.getFromApi_RecipeList();
+    public Observable<RecipeListModel> getFromApi_RecipeList(String key) {
+        return apiHelper.getFromApi_RecipeList(key);
     }
 
 }

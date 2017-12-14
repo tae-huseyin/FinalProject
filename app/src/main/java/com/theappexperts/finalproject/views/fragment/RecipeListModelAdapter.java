@@ -75,6 +75,9 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
         @OnClick(R.id.btn_GetRecipes)
         public void sayHi(Button button) {
             EventBus.getDefault().post(new GetRecipeEvent(button.getTag().toString()));
+            recipesList.remove(0);
+            notifyItemRemoved(0);
+            notifyItemRangeChanged(0,recipesList.size());
         }
 
         public MyViewHolder(View itemView) {

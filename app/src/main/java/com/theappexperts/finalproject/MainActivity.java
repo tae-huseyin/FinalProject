@@ -18,10 +18,12 @@ public class MainActivity extends AppCompatActivity{
 
         fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction()
-                .add(R.id.frag_container, new RecipeListFragment())
-                .commit();
-
+        if(savedInstanceState == null) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.frag_container, new RecipeListFragment())
+                    .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .commit();
+        }
     }
 
 }

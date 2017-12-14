@@ -1,6 +1,7 @@
 package com.theappexperts.finalproject.views.recipelist;
 
 import com.theappexperts.finalproject.data.IDataManager;
+import com.theappexperts.finalproject.data.network.consts.Constants;
 import com.theappexperts.finalproject.data.network.model.RecipeListModel;
 import com.theappexperts.finalproject.views.ui.base.BasePresenter;
 import com.theappexperts.finalproject.views.ui.utils.rx.SchedulerProvider;
@@ -24,10 +25,10 @@ public class RecipeListPresenter<V extends IRecipeListMvpView>
     }
 
     @Override
-    public void onCallRecipeModelList() {
+    public void onCallRecipeModelList(String key) {
 
         getCompositeDisposable().add(
-                getDataManager().getFromApi_RecipeList()
+                getDataManager().getFromApi_RecipeList(key)
                 .observeOn(getSchedulerProvider().ui())
                 .subscribeOn(getSchedulerProvider().io())
                 .subscribe(new Consumer<RecipeListModel>() {

@@ -9,5 +9,5 @@ import com.theappexperts.finalproject.views.ui.base.MvpPresenter;
 public interface IRecipeListMvpPresenter<V extends IRecipeListMvpView>
     extends MvpPresenter<V>
 {
-    void onCallRecipeModelList();
+    void onCallRecipeModelList(String key);
 }

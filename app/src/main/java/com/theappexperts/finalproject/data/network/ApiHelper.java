@@ -9,5 +9,5 @@ import io.reactivex.Observable;
  */
 
 public interface ApiHelper {
-    Observable<RecipeListModel> getFromApi_RecipeList();
+    Observable<RecipeListModel> getFromApi_RecipeList(String key);
 }

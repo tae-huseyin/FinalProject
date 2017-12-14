@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.theappexperts.finalproject.MyApp;
 import com.theappexperts.finalproject.R;
+import com.theappexperts.finalproject.data.network.consts.Constants;
 import com.theappexperts.finalproject.data.network.model.RecipeListModel;
 import com.theappexperts.finalproject.injection.components.ActivityComponent;
 import com.theappexperts.finalproject.injection.components.DaggerActivityComponent;
@@ -97,7 +98,7 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
         initializePresenter();
 
         EventBus.getDefault().register(this);
-        recipeListPresenter.onCallRecipeModelList();
+        recipeListPresenter.onCallRecipeModelList(Constants.API_KEY);
     }
 
     @Override
