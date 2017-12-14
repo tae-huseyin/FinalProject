@@ -46,5 +46,28 @@ public class RecipeListPresenter<V extends IRecipeListMvpView>
         );
 
     }
+    //TODO here
+    @Override
+    public void onCallRecipeModelList(String key, int page) {
+
+        getCompositeDisposable().add(
+                getDataManager().getFromApi_RecipeList(key, page)
+                        .observeOn(getSchedulerProvider().ui())
+                        .subscribeOn(getSchedulerProvider().io())
+                        .subscribe(new Consumer<RecipeListModel>() {
+                                       @Override
+                                       public void accept(RecipeListModel recipeListModel) throws Exception {
+                                           getMvpView().onFetchDataSuccess(recipeListModel);
+                                       }
+                                   },
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        getMvpView().onFetchDataError(throwable.getMessage());
+                                    }
+                                })
+        );
+
+    }
 
 }

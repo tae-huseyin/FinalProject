@@ -25,4 +25,10 @@ public class AppApiHelper implements ApiHelper{
     public Observable<RecipeListModel> getFromApi_RecipeList(String key) {
         return requestInterface.getPopular(key);
     }
+
+    @Override
+    public Observable<RecipeListModel> getFromApi_RecipeList(String key, int page) {
+        return requestInterface.getPopular(key, page);
+    }
+    //TODO here
 }

@@ -98,7 +98,7 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
         initializePresenter();
 
         EventBus.getDefault().register(this);
-        recipeListPresenter.onCallRecipeModelList(Constants.API_KEY);
+        recipeListPresenter.onCallRecipeModelList(Constants.API_KEY, 2);
     }
 
     @Override
