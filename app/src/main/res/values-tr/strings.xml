@@ -6,4 +6,6 @@
     <string name="some_error">Bazı Hata Oluştu!</string>
     <string name="connection_error">İnternet bağlantısı kesildi!</string>
 
+    <string name="btn_GetRecipes">Tarifi alın</string>
+
 </resources>

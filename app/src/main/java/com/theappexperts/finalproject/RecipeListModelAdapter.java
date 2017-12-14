@@ -1,20 +1,25 @@
 package com.theappexperts.finalproject;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.theappexperts.finalproject.data.network.model.Recipe;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -40,6 +45,9 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
     @Override
     public void onBindViewHolder(RecipeListModelAdapter.MyViewHolder holder, int position) {
         holder.tvTitle.setText(recipesList.get(position).getTitle());
+        holder.tvPublisher.setText(recipesList.get(position).getPublisher());
+        holder.ivFood.setImageURI(Uri.parse(recipesList.get(position).getImageUrl()));
+        holder.btnGetRecipes.setTag(recipesList.get(position).getRecipeId());
     }
 
     @Override
@@ -54,8 +62,19 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
         @BindView(R.id.tvTitle)
         TextView tvTitle;
 
-        //@BindView(R.id.ivFood)
-        //ImageView ivFood;
+        @BindView(R.id.tvPublisher)
+        TextView tvPublisher;
+
+        @BindView(R.id.ivFood)
+        SimpleDraweeView ivFood;
+
+        @BindView(R.id.btn_GetRecipes)
+        Button btnGetRecipes;
+
+        @OnClick(R.id.btn_GetRecipes)
+        public void sayHi(Button button) {
+            button.setText(button.getTag().toString());
+        }
 
         public MyViewHolder(View itemView) {
             super(itemView);

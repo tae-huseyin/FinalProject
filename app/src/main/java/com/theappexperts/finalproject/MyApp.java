@@ -2,6 +2,7 @@ package com.theappexperts.finalproject;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.theappexperts.finalproject.injection.components.ApplicationComponent;
 import com.theappexperts.finalproject.injection.components.DaggerApplicationComponent;
 import com.theappexperts.finalproject.injection.modules.ApplicationModule;
@@ -23,7 +24,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Fresco.initialize(this);
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
