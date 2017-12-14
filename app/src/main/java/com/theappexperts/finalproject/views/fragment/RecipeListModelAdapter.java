@@ -1,19 +1,20 @@
-package com.theappexperts.finalproject;
+package com.theappexperts.finalproject.views.fragment;
 
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.theappexperts.finalproject.R;
 import com.theappexperts.finalproject.data.network.model.Recipe;
+import com.theappexperts.finalproject.views.recipelist.GetRecipeEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
 
         @OnClick(R.id.btn_GetRecipes)
         public void sayHi(Button button) {
-            button.setText(button.getTag().toString());
+            EventBus.getDefault().post(new GetRecipeEvent(button.getTag().toString()));
         }
 
         public MyViewHolder(View itemView) {
