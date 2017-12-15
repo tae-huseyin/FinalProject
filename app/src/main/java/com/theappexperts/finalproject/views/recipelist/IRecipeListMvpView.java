@@ -10,6 +10,7 @@ import com.theappexperts.finalproject.views.ui.base.MvpView;
 public interface IRecipeListMvpView extends MvpView{
 
     void onFetchDataSuccess(RecipeListModel recipeListModel);
+    //TODO add another on success for getting recipe
     void onFetchDataError(String message);
 
 }

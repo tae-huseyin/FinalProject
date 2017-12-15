@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.theappexperts.finalproject.MyApp;
 import com.theappexperts.finalproject.R;
 import com.theappexperts.finalproject.data.network.consts.Constants;
+import com.theappexperts.finalproject.data.network.model.Recipe;
 import com.theappexperts.finalproject.data.network.model.RecipeListModel;
 import com.theappexperts.finalproject.injection.components.ActivityComponent;
 import com.theappexperts.finalproject.injection.components.DaggerActivityComponent;
@@ -27,6 +28,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -36,6 +40,7 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
 
     //pagination stuff
     private int PAGE = 1;
+    List<Recipe> savedList = new ArrayList<>();
     //end of
 
     //start of
@@ -102,12 +107,13 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
         initRecyclerView();
         initializePresenter();
 
-
-
         if(savedInstanceState == null){
+
         //first call to listener
             recipeListPresenter.onCallRecipeModelList(Constants.API_KEY, PAGE);
             EventBus.getDefault().register(this);
+        }else{
+            recyclerView.setAdapter(new RecipeListModelAdapter(savedList, getContext()));
         }
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -151,6 +157,11 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
             recyclerView.setAdapter(new RecipeListModelAdapter(recipeListModel.getRecipes(), getContext()));
         }else{
             EventBus.getDefault().post(new SendNextPageEvent(recipeListModel.getRecipes()));
+        }
+
+        for(Recipe x : recipeListModel.getRecipes())
+        {
+            savedList.add(x);
         }
     }
 
