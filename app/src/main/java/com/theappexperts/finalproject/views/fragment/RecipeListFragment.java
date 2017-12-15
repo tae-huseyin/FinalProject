@@ -21,6 +21,7 @@ import com.theappexperts.finalproject.injection.modules.ActivityModule;
 import com.theappexperts.finalproject.views.recipelist.GetRecipeEvent;
 import com.theappexperts.finalproject.views.recipelist.IRecipeListMvpView;
 import com.theappexperts.finalproject.views.recipelist.RecipeListPresenter;
+import com.theappexperts.finalproject.views.recipelist.SendNextPageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,6 +33,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
+
+    //pagination stuff
+    private int PAGE = 1;
+    //end of
 
     //start of
     @Inject
@@ -97,8 +102,25 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
         initRecyclerView();
         initializePresenter();
 
-        EventBus.getDefault().register(this);
-        recipeListPresenter.onCallRecipeModelList(Constants.API_KEY, 2);
+
+
+        if(savedInstanceState == null){
+        //first call to listener
+            recipeListPresenter.onCallRecipeModelList(Constants.API_KEY, PAGE);
+            EventBus.getDefault().register(this);
+        }
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    PAGE += 1;
+                    recipeListPresenter.onCallRecipeModelList(Constants.API_KEY, PAGE);
+                }
+            }
+        });
     }
 
     @Override
@@ -120,19 +142,25 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
 
 
 
-
-
-
-
     //startof presenter
     @Override
     public void onFetchDataSuccess(RecipeListModel recipeListModel) {
-        recyclerView.setAdapter(new RecipeListModelAdapter(recipeListModel.getRecipes(), getContext()));
+        //check if it is the first page then make a new adapter
+        //or just send with EventBus the new data to load
+        if(PAGE == 1) {
+            recyclerView.setAdapter(new RecipeListModelAdapter(recipeListModel.getRecipes(), getContext()));
+        }else{
+            EventBus.getDefault().post(new SendNextPageEvent(recipeListModel.getRecipes()));
+        }
     }
 
     @Override
     public void onFetchDataError(String message) {
+        if(PAGE == 1){
+            //make a snackbar to reload data
+        }else{
 
+        }
     }
 
     @Override

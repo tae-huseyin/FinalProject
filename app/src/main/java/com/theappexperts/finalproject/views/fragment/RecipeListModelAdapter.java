@@ -13,8 +13,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.theappexperts.finalproject.R;
 import com.theappexperts.finalproject.data.network.model.Recipe;
 import com.theappexperts.finalproject.views.recipelist.GetRecipeEvent;
+import com.theappexperts.finalproject.views.recipelist.SendNextPageEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -35,6 +38,23 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
     public RecipeListModelAdapter(List<Recipe> recipesList, Context context) {
         this.recipesList = recipesList;
         this.context = context;
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        EventBus.getDefault().unregister(this);
+        super.onDetachedFromRecyclerView(recyclerView);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSendNextPageEvent(SendNextPageEvent event) {
+
+        int getCurSize = recipesList.size();
+        for (Recipe x : event.recipeList) {
+            recipesList.add(x);
+        }
+        notifyItemRangeChanged(getCurSize,recipesList.size());
     }
 
     @Override
@@ -48,7 +68,7 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
         holder.tvTitle.setText(recipesList.get(position).getTitle());
         holder.tvPublisher.setText(recipesList.get(position).getPublisher());
         holder.ivFood.setImageURI(Uri.parse(recipesList.get(position).getImageUrl()));
-        holder.btnGetRecipes.setTag(recipesList.get(position).getRecipeId());
+        holder.btnGetRecipes.setTag(position);
     }
 
     @Override
@@ -73,11 +93,20 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
         Button btnGetRecipes;
 
         @OnClick(R.id.btn_GetRecipes)
-        public void sayHi(Button button) {
-            EventBus.getDefault().post(new GetRecipeEvent(button.getTag().toString()));
-            recipesList.remove(0);
-            notifyItemRemoved(0);
-            notifyItemRangeChanged(0,recipesList.size());
+        public void getRecipe(Button button) {
+
+
+            /*AsyncExecutor.create().execute(
+                    new AsyncExecutor.RunnableEx() {
+                        @Override
+                        public void run() throws Exception {
+                            // No need to catch any Exception (here: LoginException)
+                            EventBus.getDefault().postSticky(new GetRecipeEvent("" + recipesList.size()));
+                        }
+                    }
+            );*/
+
+            EventBus.getDefault().post(new GetRecipeEvent(""+recipesList.size()));
         }
 
         public MyViewHolder(View itemView) {
