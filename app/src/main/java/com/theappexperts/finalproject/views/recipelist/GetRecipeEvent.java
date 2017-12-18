@@ -6,10 +6,10 @@ package com.theappexperts.finalproject.views.recipelist;
 
 public class GetRecipeEvent {
 
-    public final String tag;
+    public final String rId;
 
-    public GetRecipeEvent(String tag) {
-        this.tag = tag;
+    public GetRecipeEvent(String rId) {
+        this.rId = rId;
     }
     
 }

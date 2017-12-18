@@ -8,4 +8,6 @@
 
     <string name="btn_GetRecipes">Get recipe</string>
 
+    <string name="iv_desc">Food Picture</string>
+
 </resources>

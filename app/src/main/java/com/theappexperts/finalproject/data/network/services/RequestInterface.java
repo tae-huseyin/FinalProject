@@ -2,6 +2,7 @@ package com.theappexperts.finalproject.data.network.services;
 
 import com.theappexperts.finalproject.data.network.consts.Constants;
 import com.theappexperts.finalproject.data.network.model.RecipeListModel;
+import com.theappexperts.finalproject.data.network.model.RecipeModel;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -20,6 +21,6 @@ public interface RequestInterface {
     Observable<RecipeListModel> getPopular(@Query("key") String key, @Query("page") int page);
 
     @GET(Constants.RECIPE)
-    Observable<RecipeListModel> getRecipe(@Query("key") String key, @Query("rId") String rId);
+    Observable<RecipeModel> getRecipe(@Query("key") String key, @Query("rId") String rId);
 
 }

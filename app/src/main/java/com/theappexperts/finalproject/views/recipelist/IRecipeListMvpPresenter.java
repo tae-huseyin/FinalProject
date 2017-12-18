@@ -10,6 +10,8 @@ public interface IRecipeListMvpPresenter<V extends IRecipeListMvpView>
     extends MvpPresenter<V>
 {
     void onCallRecipeModelList(String key);
-    //TODO here
+
     void onCallRecipeModelList(String key, int page);
+
+    void onCallRecipeList(String key, String rId);
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.theappexperts.finalproject.data.network.ApiHelper;
 import com.theappexperts.finalproject.data.network.AppApiHelper;
 import com.theappexperts.finalproject.data.network.model.RecipeListModel;
+import com.theappexperts.finalproject.data.network.model.RecipeModel;
 import com.theappexperts.finalproject.injection.scope.ApplicationContext;
 
 import javax.inject.Inject;
@@ -34,6 +35,11 @@ public class AppDataManager implements IDataManager {
     public Observable<RecipeListModel> getFromApi_RecipeList(String key, int page) {
         return apiHelper.getFromApi_RecipeList(key, page);
     }
-    //TODO here
+
+    @Override
+    public Observable<RecipeModel> getFromApi_Recipe(String key, String rId) {
+        return apiHelper.getFromApi_Recipe(key, rId);
+    }
+
 
 }

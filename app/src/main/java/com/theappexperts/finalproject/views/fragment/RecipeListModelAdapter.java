@@ -68,7 +68,7 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
         holder.tvTitle.setText(recipesList.get(position).getTitle());
         holder.tvPublisher.setText(recipesList.get(position).getPublisher());
         holder.ivFood.setImageURI(Uri.parse(recipesList.get(position).getImageUrl()));
-        holder.btnGetRecipes.setTag(position);
+        holder.btnGetRecipes.setTag(recipesList.get(position).getRecipeId());
     }
 
     @Override
@@ -106,7 +106,7 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
                     }
             );*/
 
-            EventBus.getDefault().post(new GetRecipeEvent(""+recipesList.size()));
+            EventBus.getDefault().post(new GetRecipeEvent(""+button.getTag()));
         }
 
         public MyViewHolder(View itemView) {

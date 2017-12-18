@@ -1,6 +1,7 @@
 package com.theappexperts.finalproject.views.recipelist;
 
 import com.theappexperts.finalproject.data.network.model.RecipeListModel;
+import com.theappexperts.finalproject.data.network.model.RecipeModel;
 import com.theappexperts.finalproject.views.ui.base.MvpView;
 
 /**
@@ -10,7 +11,7 @@ import com.theappexperts.finalproject.views.ui.base.MvpView;
 public interface IRecipeListMvpView extends MvpView{
 
     void onFetchDataSuccess(RecipeListModel recipeListModel);
-    //TODO add another on success for getting recipe
+    void onFetchDataSuccess(RecipeModel recipeModel);
     void onFetchDataError(String message);
 
 }

@@ -8,4 +8,6 @@
 
     <string name="btn_GetRecipes">Tarifi alın</string>
 
+    <string name="iv_desc">Yemek Resmi</string>
+
 </resources>

@@ -2,7 +2,9 @@ package com.theappexperts.finalproject.views.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +18,17 @@ import com.theappexperts.finalproject.R;
 import com.theappexperts.finalproject.data.network.consts.Constants;
 import com.theappexperts.finalproject.data.network.model.Recipe;
 import com.theappexperts.finalproject.data.network.model.RecipeListModel;
+import com.theappexperts.finalproject.data.network.model.RecipeModel;
+import com.theappexperts.finalproject.data.network.model.Recipes;
 import com.theappexperts.finalproject.injection.components.ActivityComponent;
 import com.theappexperts.finalproject.injection.components.DaggerActivityComponent;
 import com.theappexperts.finalproject.injection.modules.ActivityModule;
 import com.theappexperts.finalproject.views.recipelist.GetRecipeEvent;
 import com.theappexperts.finalproject.views.recipelist.IRecipeListMvpView;
+import com.theappexperts.finalproject.views.recipelist.PingRecipeEvent;
 import com.theappexperts.finalproject.views.recipelist.RecipeListPresenter;
 import com.theappexperts.finalproject.views.recipelist.SendNextPageEvent;
+import com.theappexperts.finalproject.views.recipelist.SendRecipeEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,6 +47,7 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
     //pagination stuff
     private int PAGE = 1;
     List<Recipe> savedList = new ArrayList<>();
+    Recipes lastRecipeGotten;
     //end of
 
     //start of
@@ -101,17 +108,17 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        setRetainInstance(true);
         injectDagger();
         ButterKnife.bind(this, view);
         initRecyclerView();
         initializePresenter();
 
         if(savedInstanceState == null){
-
+            EventBus.getDefault().register(this);
         //first call to listener
             recipeListPresenter.onCallRecipeModelList(Constants.API_KEY, PAGE);
-            EventBus.getDefault().register(this);
+
         }else{
             recyclerView.setAdapter(new RecipeListModelAdapter(savedList, getContext()));
         }
@@ -137,7 +144,21 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetRecipeEvent(GetRecipeEvent event) {
-        Toast.makeText(getActivity(), event.tag, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), event.rId, Toast.LENGTH_SHORT).show();
+        recipeListPresenter.onCallRecipeList(Constants.API_KEY, event.rId);
+        showSnackbar(event.rId);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPingRecipeEvent(PingRecipeEvent event) {
+        EventBus.getDefault().post(new SendRecipeEvent(lastRecipeGotten));
+    }
+
+    private void showSnackbar(final String text) {
+        View container = getView();
+        if (container != null) {
+            Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
+        }
     }
 
 
@@ -145,10 +166,8 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
 
 
 
-
-
-
     //startof presenter
+
     @Override
     public void onFetchDataSuccess(RecipeListModel recipeListModel) {
         //check if it is the first page then make a new adapter
@@ -166,11 +185,23 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
     }
 
     @Override
+    public void onFetchDataSuccess(RecipeModel recipeModel) {
+
+        lastRecipeGotten = recipeModel.getRecipes();
+
+        FragmentManager fragManager = getFragmentManager();
+        fragManager.beginTransaction()
+                .add(R.id.frag_container, new RecipeViewFragment())
+                .addToBackStack("RecipeWindow")
+                .commit();
+    }
+
+    @Override
     public void onFetchDataError(String message) {
         if(PAGE == 1){
-            //make a snackbar to reload data
+            showSnackbar(message);
         }else{
-
+            showSnackbar(message);
         }
     }
 

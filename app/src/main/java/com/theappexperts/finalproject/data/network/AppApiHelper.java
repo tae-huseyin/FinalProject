@@ -1,6 +1,7 @@
 package com.theappexperts.finalproject.data.network;
 
 import com.theappexperts.finalproject.data.network.model.RecipeListModel;
+import com.theappexperts.finalproject.data.network.model.RecipeModel;
 import com.theappexperts.finalproject.data.network.services.RequestInterface;
 
 import javax.inject.Inject;
@@ -30,5 +31,9 @@ public class AppApiHelper implements ApiHelper{
     public Observable<RecipeListModel> getFromApi_RecipeList(String key, int page) {
         return requestInterface.getPopular(key, page);
     }
-    //TODO here
+
+    @Override
+    public Observable<RecipeModel> getFromApi_Recipe(String key, String rId) {
+        return requestInterface.getRecipe(key ,rId);
+    }
 }
