@@ -58,7 +58,7 @@ public class RecipeViewFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
 
-        EventBus.getDefault().post(new PingRecipeEvent());
+        EventBus.getDefault().post(new PingRecipeEvent());//thing that the fragment is ready
     }
 
     @Override
@@ -71,14 +71,17 @@ public class RecipeViewFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetRecipeEvent(SendRecipeEvent event) {
         recipe = event.recipe;
-        putRecipeOnView();
+        putRecipeOnView();//get from ping the data and put on view
     }
 
     void putRecipeOnView()
     {
         ivRecipePicture.setImageURI(Uri.parse(recipe.getImageUrl()));
         tvRecipeTitle.setText(recipe.getTitle());
-        //make forloop
-        tvRecipeList.setText(recipe.getIngredients().get(0).toString());
+
+        for(String x: recipe.getIngredients())
+        {
+            tvRecipeList.append("-" + x + "\n");
+        }
     }
 }
