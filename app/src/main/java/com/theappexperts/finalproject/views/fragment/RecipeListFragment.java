@@ -144,9 +144,8 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetRecipeEvent(GetRecipeEvent event) {
-        //Toast.makeText(getActivity(), event.rId, Toast.LENGTH_SHORT).show();
         recipeListPresenter.onCallRecipeList(Constants.API_KEY, event.rId);
-        showSnackbar(event.rId);
+        //showSnackbar(event.rId);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

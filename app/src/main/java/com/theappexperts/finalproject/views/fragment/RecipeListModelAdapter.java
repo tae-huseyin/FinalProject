@@ -94,18 +94,6 @@ public class RecipeListModelAdapter extends RecyclerView.Adapter<RecipeListModel
 
         @OnClick(R.id.btn_GetRecipes)
         public void getRecipe(Button button) {
-
-
-            /*AsyncExecutor.create().execute(
-                    new AsyncExecutor.RunnableEx() {
-                        @Override
-                        public void run() throws Exception {
-                            // No need to catch any Exception (here: LoginException)
-                            EventBus.getDefault().postSticky(new GetRecipeEvent("" + recipesList.size()));
-                        }
-                    }
-            );*/
-
             EventBus.getDefault().post(new GetRecipeEvent(""+button.getTag()));
         }
 
