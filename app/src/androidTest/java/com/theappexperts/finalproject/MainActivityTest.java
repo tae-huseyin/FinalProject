@@ -9,9 +9,9 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.scrollToPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by TheAppExperts on 13/12/2017.
@@ -25,6 +25,11 @@ public class MainActivityTest {
 
     @Test
     public void checkActivityHasRecyclerView(){
-        onView(withId(R.id.rvRecipeList)).check(matches(isDisplayed()));
+        onView(withId(R.id.frag_container)).check(matches(isDisplayed()));
+        onView(withId(R.id.rvListOfRecipes)).perform(scrollToPosition(10))
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.rvListOfRecipes)).perform(scrollToPosition(4));
     }
+
+
 }

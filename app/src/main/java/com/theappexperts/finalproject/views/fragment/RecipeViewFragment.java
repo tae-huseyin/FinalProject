@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,15 @@ public class RecipeViewFragment extends Fragment {
     public void goToSite(){
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(recipe.getPublisherUrl()));
         startActivity(intent);
+    }
+
+    @OnClick(R.id.fbtnMap)
+    public void goToMap(){
+        FragmentManager fragManager = getFragmentManager();
+        fragManager.beginTransaction()
+                .add(R.id.frag_container, new MapFragment())
+                .addToBackStack("MapWindow")
+                .commit();
     }
 
     public RecipeViewFragment() {

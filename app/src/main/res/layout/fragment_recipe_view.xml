@@ -69,4 +69,15 @@
         android:src="@drawable/globe_icon"
         app:layout_anchorGravity="bottom|right" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fbtnMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:paddingTop="30dp"
+        android:src="@drawable/map_icon"
+        app:backgroundTint="@color/colorFancyRed"
+        app:layout_anchor="@id/tvRecipeList"
+        app:layout_anchorGravity="bottom|left" />
+
 </android.support.design.widget.CoordinatorLayout>

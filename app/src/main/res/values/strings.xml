@@ -10,4 +10,10 @@
 
     <string name="iv_desc">Food Picture</string>
 
+
+    <string name="google_maps_key">AIzaSyAUawOrkJeabOJ8_njmt_o4pz9ekcvI14E</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -26,7 +26,7 @@ public class Recipes {
     private String imageUrl;
     @SerializedName("social_rank")
     @Expose
-    private Integer socialRank;
+    private Double socialRank;
     @SerializedName("publisher_url")
     @Expose
     private String publisherUrl;
@@ -82,11 +82,11 @@ public class Recipes {
         this.imageUrl = imageUrl;
     }
 
-    public Integer getSocialRank() {
+    public Double getSocialRank() {
         return socialRank;
     }
 
-    public void setSocialRank(Integer socialRank) {
+    public void setSocialRank(Double socialRank) {
         this.socialRank = socialRank;
     }
 

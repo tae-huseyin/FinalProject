@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.theappexperts.finalproject.MyApp;
 import com.theappexperts.finalproject.R;
@@ -48,6 +47,7 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
     private int PAGE = 1;
     List<Recipe> savedList = new ArrayList<>();
     Recipes lastRecipeGotten;
+    boolean callApi = false;
     //end of
 
     //start of
@@ -128,9 +128,10 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-                if (!recyclerView.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(1) && callApi) {
                     PAGE += 1;
                     recipeListPresenter.onCallRecipeModelList(Constants.API_KEY, PAGE);
+                    callApi = false;
                 }
             }
         });
@@ -180,7 +181,35 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
         for(Recipe x : recipeListModel.getRecipes())
         {
             savedList.add(x);
+            callApi = true;
         }
+
+        //final RecipeList recipeList = new RecipeList();
+            //recipeList.setRecipeListModel(recipeListModel);
+            /*recipeList.setImgUrl(x.getImageUrl());
+            recipeList.setRecipeId(x.getRecipeId());
+            recipeList.setRecipePublisher(x.getPublisher());
+            recipeList.setRecipeTitle(x.getTitle());*/
+
+        //new Thread(new Runnable() {
+        //    @Override
+        //    public void run() {
+         //       MyApp.get().DB().recipeListDao().insert(recipeList);
+                //MyApp.get().DB().recipeListDao().nukeTable();
+        //    }
+        //}).start();
+
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<RecipeList> items = MyApp.get().DB().recipeListDao().getAll();
+                Log.i("tess", " num of items = " + items.size() + " first element name =" + items.get(0).getRecipeTitle());
+                MyApp.get().DB().recipeListDao().nukeTable();
+                List<RecipeList> items2 = MyApp.get().DB().recipeListDao().getAll();
+                Log.i("tess2", " num of items = " + items2.size());
+            }
+        }).start();*/
+
     }
 
     @Override
