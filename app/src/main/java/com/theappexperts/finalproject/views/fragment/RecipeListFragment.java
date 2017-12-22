@@ -105,6 +105,11 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
         return inflater.inflate(R.layout.fragment_recipe, container, false);
     }
 
+    /**
+     * when a view is created it sets up the view elements and init's
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -137,18 +142,30 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
         });
     }
 
+    /**
+     * makes sure that event bus is being unregistered when ondestory is called or it can result to some funky stuff
+     */
     @Override
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
+    /**
+     * eventbus that listens to when a user presses get recipe and pings the API to get the recipe
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetRecipeEvent(GetRecipeEvent event) {
         recipeListPresenter.onCallRecipeList(Constants.API_KEY, event.rId);
         //showSnackbar(event.rId);
     }
 
+    /**
+     * this listens to eventbus that was sent by the recipe fragment
+     * and it send back the last gotten recipelist to update the recyclerview
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPingRecipeEvent(PingRecipeEvent event) {
         EventBus.getDefault().post(new SendRecipeEvent(lastRecipeGotten));
@@ -168,6 +185,13 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
 
     //startof presenter
 
+    /*
+     * when you ping the API this is the function that listens if it was successful and returns the data back in this case
+     * returns a recipeListModel then after it has the data checks to see if it was the first call or sends a event bus to
+     * to say its a new page
+     * @param RecipeListModel
+     * @return void
+     */
     @Override
     public void onFetchDataSuccess(RecipeListModel recipeListModel) {
         //check if it is the first page then make a new adapter
@@ -184,6 +208,9 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
             callApi = true;
         }
 
+        /**
+        for testing to see if the database actually works but has a problem with Dagger when i try to use it
+         */
         //final RecipeList recipeList = new RecipeList();
             //recipeList.setRecipeListModel(recipeListModel);
             /*recipeList.setImgUrl(x.getImageUrl());
@@ -212,6 +239,11 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
 
     }
 
+    /**
+     * when the user presses the get recipe button it pings the API and this function listens to the result
+     * if it was successful it creates a new fragment and adds it to the back stack
+     * @param recipeModel
+     */
     @Override
     public void onFetchDataSuccess(RecipeModel recipeModel) {
 
@@ -224,6 +256,11 @@ public class RecipeListFragment extends Fragment implements IRecipeListMvpView {
                 .commit();
     }
 
+    /**
+     * if there was any errors whilst pinging the API this function gets called and it listens to what the error was and displays
+     * it with a snackbar
+     * @param  message
+     */
     @Override
     public void onFetchDataError(String message) {
         if(PAGE == 1){

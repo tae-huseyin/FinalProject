@@ -24,6 +24,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
+    /*
+     * this sets up the map and puts it in a fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
